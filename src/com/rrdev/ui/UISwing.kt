@@ -1,11 +1,11 @@
 package com.rrdev.ui
 
+import com.rrdev.extension.isIntegerNotValid
 import com.rrdev.extension.isIntegerValid
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Frame
 import java.awt.Rectangle
-import java.awt.event.ActionListener
 import javax.swing.*
 import javax.swing.BoxLayout
 
@@ -33,7 +33,6 @@ class UISwing: JFrame(){
 
         panelContent.run {
             bounds = Rectangle(50, 50)
-//            size = Dimension(800, 800)
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
             add(labelMemorySizeRange)
             add(inputMemorySizeRange)
@@ -53,10 +52,22 @@ class UISwing: JFrame(){
         }
 
         buttonContinue.addActionListener {
-            if (inputMemorySizeRange.isIntegerValid()){
-                println("is valid")
-            } else{
-                println("not valid")
+            when{
+                inputMemorySizeRange.isIntegerNotValid()->{
+                    showMessage("valor inválido: Tamanho da memória")
+                }
+                inputMemoryOSSizeRange.isIntegerNotValid()->{
+                    showMessage("valor inválido: Tamanho do SO")
+                }
+                inputMemoryProcessSizeRange.isIntegerNotValid()->{
+                    showMessage("valor inválido: Tamanho do processo")
+                }
+                inputProcessCreationTimeRange.isIntegerNotValid()->{
+                    showMessage("valor inválido: Tamanho do processo criação")
+                }
+                inputProcessDurationTimeRange.isIntegerNotValid()->{
+                    showMessage("valor inválido: Tamanho do processo duração")
+                }
             }
 
         }
