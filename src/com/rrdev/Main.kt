@@ -1,8 +1,10 @@
 package com.rrdev
 
-import com.rrdev.time.Time
 import com.rrdev.time.TimeListener
+import com.rrdev.ui.UIPanelInputDouble
 import com.rrdev.ui.UISwing
+import java.awt.BorderLayout
+import javax.swing.JFrame
 
 object Main: TimeListener.Update {
 
@@ -22,10 +24,8 @@ object Main: TimeListener.Update {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val n = 4
 
         UISwing()
-        val time = Time(this)
-        listener = time
+
     }
 }
