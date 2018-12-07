@@ -1,6 +1,8 @@
 package com.rrdev.model
 
 import com.rrdev.extension.getBiggerHole
+import com.rrdev.time.Time
+import com.rrdev.time.TimeListener
 
 data class Memory (var size: Int,
                    var soSize: Int,
@@ -9,9 +11,15 @@ data class Memory (var size: Int,
                    var completedList: MutableList<Process> = ArrayList(),
                    var holes: MutableList<Hole> = ArrayList()){
 
+    private var listener: TimeListener.Finish? = null
 
     init {
         runList.add(Process(id = "SO", size = soSize, creationTime = 0, duration = Int.MAX_VALUE, osType = true))
+    }
+
+
+    fun setListener(listener: TimeListener.Finish){
+        this.listener = listener
     }
 
 
@@ -114,6 +122,9 @@ data class Memory (var size: Int,
                 completedList.add(it)
                 runList.remove(it)
                 calculateHoles()
+                if (runList.isEmpty() && waitList.isEmpty()){
+                 listener?.finishCount()
+                }
             }
         }
     }
@@ -130,7 +141,7 @@ data class Memory (var size: Int,
         if (completedList.isNotEmpty()){
            averageWaitTime = totalWaitTime/completedList.size
         }
-        println("Tempo médio de espera: ${averageWaitTime}")
+        println("Tempo médio de espera: $averageWaitTime")
     }
 
 }

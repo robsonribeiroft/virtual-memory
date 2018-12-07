@@ -8,7 +8,7 @@ class Time(private val listener: TimeListener.Update?=null): Thread(), TimeListe
     private var keepCount = true
 
     init {
-//        Thread(this).start()
+        Thread(this).start()
     }
 
     override fun run() {

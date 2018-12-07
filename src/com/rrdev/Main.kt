@@ -1,31 +1,41 @@
 package com.rrdev
 
+import com.rrdev.model.Memory
+import com.rrdev.time.Time
 import com.rrdev.time.TimeListener
-import com.rrdev.ui.UIPanelInputDouble
-import com.rrdev.ui.UISwing
-import java.awt.BorderLayout
-import javax.swing.JFrame
+import com.rrdev.util.Generator
 
-object Main: TimeListener.Update {
+object Main: TimeListener.Update, TimeListener.Finish {
+    override fun finishCount() {
+        memory.getAverageWaitTime()
+    }
 
-    private var processes = ArrayList<Process>()
-    private var listener:  TimeListener.Finish? = null
+    private lateinit var generator: Generator
+    private lateinit var memory: Memory
 
 
     override fun updateTime(time: Int) {
-        println("${System.currentTimeMillis()} - $time")
-        if (time >3){
-            println("10")
-            listener?.finishCount()
-        }
+        memory.verifyRunningProcess()
+        generator.elapsedSecond(time)
+
     }
 
 
 
     @JvmStatic
     fun main(args: Array<String>) {
+        val scan = System.`in`
+        val soSize = scan.read()
+        val sizeMemo = scan.read()
+        memory.setListener(this)
+        memory = Memory(sizeMemo, soSize)
 
-        UISwing()
+        generator = Generator(memory)
+        generator.generateProcesses()
+
+        Time(this)
+
+
 
     }
 }

@@ -7,7 +7,7 @@ data class Process (
         var startPage: Int=0,
         var endPage: Int = 0,
         var size: Int=0,
-        var creationTime: Int?=null,
+        var creationTime: Int=0,
         var duration: Int=0,
         var wait: Int = 0,
         var osType: Boolean = false,
